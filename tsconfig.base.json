@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mf-demo/auth": ["libs/auth/src/index.ts"],
       "@mf-demo/material": ["libs/material/src/index.ts"]
     }
   },
