@@ -133,35 +133,6 @@
       },
       "tags": []
     },
-    "book-store-e2e": {
-      "root": "apps/book-store-e2e",
-      "sourceRoot": "apps/book-store-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/book-store-e2e/cypress.json",
-            "devServerTarget": "book-store:serve:development",
-            "tsConfig": "apps/book-store-e2e/tsconfig.json"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "book-store:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/book-store-e2e/**/*.{js,ts}"]
-          }
-        }
-      },
-      "tags": [],
-      "implicitDependencies": ["book-store"]
-    },
     "material": {
       "projectType": "library",
       "root": "libs/material",
@@ -296,34 +267,6 @@
         }
       },
       "tags": []
-    },
-    "shell-e2e": {
-      "root": "apps/shell-e2e",
-      "sourceRoot": "apps/shell-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/shell-e2e/cypress.json",
-            "devServerTarget": "shell:serve:development"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "shell:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": ["apps/shell-e2e/**/*.{js,ts}"]
-          }
-        }
-      },
-      "tags": [],
-      "implicitDependencies": ["shell"]
     }
   }
 }
