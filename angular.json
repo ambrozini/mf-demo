@@ -21,7 +21,10 @@
               "apps/book-store/src/favicon.ico",
               "apps/book-store/src/assets"
             ],
-            "styles": ["apps/book-store/src/styles.scss"],
+            "styles": [
+              "apps/book-store/src/styles.scss",
+              "libs/material/src/lib/styles/index.scss"
+            ],
             "scripts": [],
             "customWebpackConfig": {
               "path": "apps/book-store/webpack.config.js"
@@ -133,6 +136,32 @@
       "tags": [],
       "implicitDependencies": ["book-store"]
     },
+    "material": {
+      "projectType": "library",
+      "root": "libs/material",
+      "sourceRoot": "libs/material/src",
+      "prefix": "mf-demo",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/material"],
+          "options": {
+            "jestConfig": "libs/material/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/material/src/**/*.ts",
+              "libs/material/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "shell": {
       "projectType": "application",
       "root": "apps/shell",
@@ -150,7 +179,10 @@
             "tsConfig": "apps/shell/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-            "styles": ["apps/shell/src/styles.scss"],
+            "styles": [
+              "apps/shell/src/styles.scss",
+              "libs/material/src/lib/styles/index.scss"
+            ],
             "scripts": [],
             "customWebpackConfig": {
               "path": "apps/shell/webpack.config.js"
