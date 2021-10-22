@@ -41,7 +41,9 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      remotes: {},
+      remotes: {
+        "bookStore": "bookStore@http://localhost:4201/remoteEntry.js",
+    },
       shared: {
         '@angular/core': { singleton: true, strictVersion: true },
         '@angular/common': { singleton: true, strictVersion: true },
