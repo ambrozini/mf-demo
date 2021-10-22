@@ -19,9 +19,7 @@ const workspaceRootPath = path.join(__dirname, '../../');
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(
   tsConfigPath,
-  [
-    /* mapped paths to share */
-  ],
+  ['@mf-demo/material', '@mf-demo/auth'],
   workspaceRootPath
 );
 

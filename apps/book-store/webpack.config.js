@@ -19,15 +19,13 @@ const workspaceRootPath = path.join(__dirname, '../../');
 const sharedMappings = new mf.SharedMappings();
 sharedMappings.register(
   tsConfigPath,
-  [
-    /* mapped paths to share */
-  ],
+  ['@mf-demo/material', '@mf-demo/auth'],
   workspaceRootPath
 );
 
 module.exports = {
   output: {
-    uniqueName: 'book-store',
+    uniqueName: 'bookStore',
     publicPath: 'auto',
   },
   optimization: {
@@ -41,10 +39,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'book-store',
+      name: 'bookStore',
       filename: 'remoteEntry.js',
       exposes: {
-        './Module': 'apps/book-store/src/app/remote-entry/entry.module.ts',
+        './Module': 'apps/book-store/src/app/book-store/book-store.module.ts',
       },
       shared: {
         '@angular/core': { singleton: true, strictVersion: true },
