@@ -5,8 +5,19 @@ import { BookStoreComponent } from './book-store.component';
 const routes: Routes = [
   {
     path: '',
-    component: BookStoreComponent,
+    redirectTo: 'books',
     pathMatch: 'full',
+  },
+  {
+    path: 'books',
+    component: BookStoreComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./book-list/book-list.module').then((m) => m.BookListModule),
+      },
+    ],
   },
 ];
 
