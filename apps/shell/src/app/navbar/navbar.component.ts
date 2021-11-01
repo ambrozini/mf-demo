@@ -1,7 +1,8 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { DynamicRoute } from '../service/dynamic-routes/dynamic-route';
 
 @Component({
   selector: 'mf-demo-navbar',
@@ -9,6 +10,9 @@ import { map, shareReplay } from 'rxjs/operators';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
+  @Input()
+  routes: DynamicRoute[] = [];
+
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(

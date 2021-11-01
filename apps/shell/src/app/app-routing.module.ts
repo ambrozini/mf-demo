@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Route, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from '@mf-demo/auth';
+import { ErrorComponent } from './error/error.component';
+import { LazyModulesGuard } from './guard/lazy-modules.guard';
 import { HomeComponent } from './home/home.component';
 
-const routes: Routes = [
+export const APP_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -17,15 +19,17 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  {
-    path: 'book-store',
-    loadChildren: () =>
-      import('bookStore/Module').then((m) => m.BookStoreModule),
-  },
 ];
 
+export const FALLBACK_ROUTE: Route = {
+  path: '**',
+  canActivate: [LazyModulesGuard],
+  component: ErrorComponent,
+  pathMatch: 'full',
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot([...APP_ROUTES, FALLBACK_ROUTE])],
   exports: [RouterModule],
   declarations: [],
 })
