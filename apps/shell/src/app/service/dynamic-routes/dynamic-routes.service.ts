@@ -2,6 +2,7 @@ import { loadRemoteModule } from '@angular-architects/module-federation';
 import { Injectable } from '@angular/core';
 import { Route, Router, Routes } from '@angular/router';
 import { APP_ROUTES, FALLBACK_ROUTE } from '../../app-routing.module';
+import { DynamicComponent } from '../../dynamic/dynamic.component';
 import { ModuleConfig, ModuleType } from '../orchestrator/module-config';
 import { OrchestratorService } from '../orchestrator/orchestrator.service';
 import { DynamicRoute } from './dynamic-route';
@@ -15,7 +16,10 @@ export class DynamicRoutesService {
   private routeBuilderMap = new Map<
     ModuleType,
     (moduleConfig: ModuleConfig) => Route
-  >([[ModuleType.ANGULAR_MODULE, this.buildRouteForAngularModule.bind(this)]]);
+  >([
+    [ModuleType.ANGULAR_MODULE, this.buildRouteForAngularModule.bind(this)],
+    [ModuleType.WEB_COMPONENT, this.buildRouteForWebComponent.bind(this)],
+  ]);
 
   public get dynamicRoutes(): DynamicRoute[] {
     return [...this._dynamicRoutes];
@@ -54,6 +58,16 @@ export class DynamicRoutesService {
       path: config.routePath,
       loadChildren: () =>
         loadRemoteModule(config).then((m) => m[config.ngModuleName]),
+    };
+  }
+
+  private buildRouteForWebComponent(config: ModuleConfig) {
+    return {
+      path: config.routePath,
+      component: DynamicComponent,
+      data: {
+        config,
+      },
     };
   }
 }

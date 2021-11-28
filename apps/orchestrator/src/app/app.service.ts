@@ -36,6 +36,15 @@ export class AppService {
         ngModuleName: 'BookStoreModule',
         active: true,
       },
+      {
+        type: ModuleType.WEB_COMPONENT,
+        remoteEntry: 'http://localhost:8083/remoteEntry.js',
+        remoteName: 'newFeature',
+        exposedModule: './Index',
+        displayName: 'New Feature',
+        routePath: 'new-feature',
+        active: true,
+      },
     ];
   }
 }
