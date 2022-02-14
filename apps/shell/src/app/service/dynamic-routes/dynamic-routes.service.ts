@@ -11,7 +11,7 @@ import { DynamicRoute } from './dynamic-route';
   providedIn: 'root',
 })
 export class DynamicRoutesService {
-  private _dynamicRoutes: DynamicRoute[] = [];
+  private _dynamicRoutes: DynamicRoute[] | undefined;
 
   private routeBuilderMap = new Map<
     ModuleType,
@@ -21,8 +21,14 @@ export class DynamicRoutesService {
     [ModuleType.WEB_COMPONENT, this.buildRouteForWebComponent.bind(this)],
   ]);
 
-  public get dynamicRoutes(): DynamicRoute[] {
-    return [...this._dynamicRoutes];
+  public get dynamicRoutes(): Promise<DynamicRoute[]> {
+    if (this._dynamicRoutes == null) {
+      return this.init().then(async (dynamicRoutes) => {
+        this._dynamicRoutes = dynamicRoutes;
+        return [...this._dynamicRoutes];
+      });
+    }
+    return Promise.resolve([...this._dynamicRoutes]);
   }
 
   constructor(
@@ -30,13 +36,11 @@ export class DynamicRoutesService {
     private orchestratorService: OrchestratorService
   ) {}
 
-  async init() {
-    if (this.dynamicRoutes.length == 0) {
-      const config = await this.orchestratorService.getConfig();
-      this._dynamicRoutes = config as DynamicRoute[];
-      const newRoutes = this.buildRoutes(config);
-      this.router.resetConfig(newRoutes);
-    }
+  private async init(): Promise<DynamicRoute[]> {
+    const config = await this.orchestratorService.getConfig();
+    const newRoutes = this.buildRoutes(config);
+    this.router.resetConfig(newRoutes);
+    return config;
   }
 
   private buildRoutes(config: ModuleConfig[]): Routes {

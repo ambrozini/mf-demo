@@ -1,3 +1,6 @@
-<mf-demo-navbar [routes]="routes">
+<mf-demo-navbar
+  *ngIf="routes | async as resolvedRoutes"
+  [routes]="resolvedRoutes"
+>
   <router-outlet></router-outlet>
 </mf-demo-navbar>

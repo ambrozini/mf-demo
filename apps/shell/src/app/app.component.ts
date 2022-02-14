@@ -9,7 +9,7 @@ import { DynamicRoutesService } from './service/dynamic-routes/dynamic-routes.se
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  routes: DynamicRoute[] = [];
+  routes: Promise<DynamicRoute[]> = Promise.resolve([]);
 
   constructor(
     private authService: AuthService,
@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.authService.username = 'Admin';
-    await this.dynamicRoutesService.init();
     this.routes = this.dynamicRoutesService.dynamicRoutes;
   }
 }

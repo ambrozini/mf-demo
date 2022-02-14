@@ -22,9 +22,8 @@ export class LazyModulesGuard implements CanActivate {
     _: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
-    await this.dynamicRoutesService.init();
     const currentPath = state.url.split('/')[1];
-    const route = this.dynamicRoutesService.dynamicRoutes.find(
+    const route = (await this.dynamicRoutesService.dynamicRoutes).find(
       (route: DynamicRoute) => route.routePath === currentPath
     );
     if (route && route.active) {
